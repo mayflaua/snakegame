@@ -6,7 +6,7 @@ function getRandomCoord(max) {
 
 function startGame() {
   run = setInterval(game, 1000/speed);
-  startButton.innerText = "Start again";
+  startButton.setAttribute("hidden", "")
   startButton.removeEventListener('click', startGame);
   startButton.addEventListener('click', function() {
     clearInterval(run);
@@ -17,7 +17,7 @@ function startGame() {
 }
 
 function clearPosition() {
-  // reset snake position, apple position, score
+  // reset snake position, apple position, score, game over overlay
 
   applePosition = [getRandomCoord(width), getRandomCoord(height)];
   score = 0;
@@ -28,6 +28,7 @@ function clearPosition() {
   for (let i = 0; i < startLenght; i++) {
     snakeBody.push([Math.floor(width/2), Math.floor(height/2)+1]);
   }
+  gameOver.setAttribute("hidden", "");
 }
 
 function resetScoreFields() {
@@ -88,7 +89,29 @@ function renderSnake() {
 }
 
 function drawStartGameText() {
-  
+  startButton.innerHTML = "start-game";
+}
+
+function drawStartAgainButton() {
+  startButton.innerHTML = "start-again";
+  startButton.removeAttribute("hidden");
+  startButton.classList.add("start-again-button")
+}
+
+function drawPlayAgainButton() {
+  startButton.innerHTML = "play-again";
+  startButton.removeAttribute("hidden");
+  startButton.classList.add("start-again-button")
+}
+
+function drawGameOver() {
+  gameOver.innerHTML = "game over!";
+  gameOver.removeAttribute("hidden");
+}
+
+function drawWellDone() {
+  gameOver.innerHTML = "well done!";
+  gameOver.removeAttribute("hidden");
 }
 
 const speed = 4;  // moves per second
@@ -119,6 +142,7 @@ scoreField.innerHTML = score;
 
 let startButton = document.getElementById('start-game__button');
 startButton.addEventListener('click', startGame);
+let gameOver = document.getElementById("game-over");
 
 
 // initial clearing
@@ -153,15 +177,26 @@ game = function() {
   renderSnake();
   
   // end game conditions
+  //score = 10
+  if (score == 10) {
+    drawWellDone();
+    drawPlayAgainButton();
+    clearInterval(run);
+  }
+
   // snake get out of field
   if (snakeBody[0][0] * 10 > canvas.width-1 || snakeBody[0][1] * 10 > canvas.height-1 || snakeBody[0][0] * 10 < 0 || snakeBody[0][1] * 10 < 0) {
-      clearInterval(run);
+    drawStartAgainButton();  
+    drawGameOver();
+    clearInterval(run);
       // alert("Score: " + score + '\nerr: out of field');
   }
   // snake touches itself
   snakeBody.forEach(function(e, i) {
     let lastBlock = snakeBody.length - 1;
     if (e[0] == snakeBody[lastBlock][0] && e[1] == snakeBody[lastBlock][1] && i < lastBlock && score >= untouchableScore) {
+      drawStartAgainButton();
+      drawGameOver();
       clearInterval(run);
       // alert("Score: " + score + '\nerr: self-touch');
     } 
@@ -185,7 +220,7 @@ game = function() {
     applePosition[1] = getRandomCoord(height);
     score++;
     scoreField.innerHTML = score;
-    foods[10-score].style.opacity = 0.7;
+    foods[10-score].style.opacity = 0.4;
   };
 }
 

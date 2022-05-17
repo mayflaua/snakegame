@@ -9,11 +9,13 @@
   <!-- <script src='main.js'></script> -->
 </head>
 <body>
-  <canvas id="snake" width="200" height="400">snake</canvas>
-  <script src="snake.js" defer></script>
-  <button id="start-game__button">
-    Start
-  </button>
+  <div class="snake-window">
+    <canvas id="snake" width="200" height="400">snake</canvas>
+    <script src="snake.js" defer></script>
+    <button id="start-game__button" class="start-game__button play-again-button">start-game
+    </button>
+    <div id="game-over" class="game-over" hidden>game over!</div>
+  </div>
   <div id="score"></div>
   <div class="foods">
       <div class="food"></div>
