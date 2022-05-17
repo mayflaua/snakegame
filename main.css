@@ -1,3 +1,43 @@
 #snake {
   border: 1px solid black;
 } 
+
+body {
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#start-game__button {
+  padding: 16px;
+  margin: 50px;
+  font-size: 20px;
+}
+
+#score {
+  width: 100px;
+  height: 50px;
+  background-color: white;
+  text-align: center;
+}
+
+.foods {
+  min-width: 115px;
+  max-width: 115px;
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  border: 1px solid white;
+}
+
+
+.food {
+  width: 0;
+  height: 0;
+  border: 7px solid rgb(67, 217, 173);
+  border-radius: 50%;
+  margin: 4px;
+}
